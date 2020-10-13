@@ -28,9 +28,11 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   get: ^3.2.2
   get_it: ^5.0.1
+  hive: ^1.4.4+1
   http: ^0.12.1
   image_picker: ^0.6.6+5
   json_annotation: ^2.0.0
+  path_provider: ^1.6.18
 
 dev_dependencies:
   flutter_test:

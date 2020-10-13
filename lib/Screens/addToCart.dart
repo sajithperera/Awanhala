@@ -432,24 +432,24 @@ class _AddToCartState extends State<AddToCart> {
                     ),
                   ),
                   SizedBox(height: blockHeight * 1.5),
-                  Container(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: blockWidth * 13,
-                        right: blockWidth * 13,
-                        bottom: blockHeight * 4,
-                      ),
-                      child: Text(
-                        // *** users comments
-                        " මල ජරාව. ලුනුත් නෑ, බොක හොද්ද වගේ මෙලෝ රහක් නෑ..",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(
+                  //       left: blockWidth * 13,
+                  //       right: blockWidth * 13,
+                  //       bottom: blockHeight * 4,
+                  //     ),
+                  //     child: Text(
+                  //       // *** users comments
+                  //       " මල ජරාව. ලුනුත් නෑ, බොක හොද්ද වගේ මෙලෝ රහක් නෑ..",
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //         fontWeight: FontWeight.w300,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
