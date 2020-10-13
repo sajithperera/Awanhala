@@ -442,7 +442,7 @@ class _AddToCartState extends State<AddToCart> {
                   //     ),
                   //     child: Text(
                   //       // *** users comments
-                  //       " මල ජරාව. ලුනුත් නෑ, බොක හොද්ද වගේ මෙලෝ රහක් නෑ..",
+                  //       //"කන්නෙපා මල ජරාව. ලුනුත් නෑ, බොක හොද්ද වගේ මෙලෝ රහක් නෑ..",
                   //       style: TextStyle(
                   //         fontSize: 16.0,
                   //         fontWeight: FontWeight.w300,

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awanahala/Screens/ratethefood.dart';
 import 'package:awanahala/shared/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,8 +15,6 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       body: _body(),
     );
@@ -36,41 +35,37 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget _profilepic() {
-    SizeConfig().init(context);
-    double blockHeight = SizeConfig.safeBlockVertical;
-    double blockWidth = SizeConfig.safeBlockHorizontal;
-    
     return Padding(
       padding: EdgeInsets.only(top: 32),
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           picker(context);
         },
-          child: CircleAvatar(
-              radius: 55,
-              backgroundColor: Colors.yellow[200],
-              child: _image != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.file(
-                        _image,
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.fitWidth,
-                      ),
-                    )
-                  : Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(50)),
-                      width: 100,
-                      height: 100,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-            ),
+        child: CircleAvatar(
+          radius: 55,
+          backgroundColor: Colors.yellow[200],
+          child: _image != null
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.file(
+                    _image,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fitWidth,
+                  ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(50)),
+                  width: 100,
+                  height: 100,
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.grey[800],
+                  ),
+                ),
+        ),
       ),
     );
   }
@@ -107,23 +102,56 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget _heading(String text) {
+    SizeConfig().init(context);
+    double blockHeight = SizeConfig.safeBlockVertical;
+    double blockWidth = SizeConfig.safeBlockHorizontal;
     return Align(
       alignment: Alignment.centerLeft,
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 16),
-            child: Text(
-              text,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+          Row(
+            children: [
+              Container(
+                width: blockWidth*50,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 16),
+                  child: Text(
+                    text,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: blockWidth * 20,
+              ),
+              IconButton(
+                alignment: Alignment.centerRight,
+                icon: Icon(
+                  Icons.keyboard_arrow_right_rounded,
+                  color: Colors.green,
+                  size: blockWidth*15,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RateFood()),
+                  );
+                },
+              )
+            ],
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              height: 6,
-              width: MediaQuery.of(context).size.width / 3,
-              color: Colors.red,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Center(
+              child: ClipRRect(
+                
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  height: 4,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.red,
+                ),
+              ),
             ),
           )
         ],
