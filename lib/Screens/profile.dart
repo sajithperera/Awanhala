@@ -173,7 +173,7 @@ class _UserProfileState extends State<UserProfile> {
           Row(
             children: [
               Container(
-                width: blockWidth*50,
+                width: blockWidth * 50,
                 child: Padding(
                   padding: EdgeInsets.only(left: 16),
                   child: Text(
@@ -188,9 +188,9 @@ class _UserProfileState extends State<UserProfile> {
               IconButton(
                 alignment: Alignment.centerRight,
                 icon: Icon(
-                  Icons.keyboard_arrow_right_rounded,
+                  Icons.access_alarm,
                   color: Colors.green,
-                  size: blockWidth*15,
+                  size: blockWidth * 15,
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -205,7 +205,6 @@ class _UserProfileState extends State<UserProfile> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: ClipRRect(
-                
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   height: 4,

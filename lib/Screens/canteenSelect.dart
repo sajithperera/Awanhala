@@ -9,6 +9,8 @@ import 'package:awanahala/services/university_service.dart';
 import 'package:awanahala/shared/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 import 'foodItem.dart';
 
@@ -24,6 +26,12 @@ class _CanteenSelectState extends State<CanteenSelect> {
     University(id: "0001", university: "University of Colombo"),
     University(id: "0001", university: "University of Moratuwa")
   ];
+
+  logout() {
+    print("logout");
+    Hive.box('user').clear();
+    Get.offAll(Login());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +54,7 @@ class _CanteenSelectState extends State<CanteenSelect> {
                 child: DrawerHeader(
                   child: Container(
                     // width: blockWidth*20,
-                    // height: blockHeight*40,
+                    height: blockHeight * 40,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           scale: 1.5,
@@ -54,7 +62,7 @@ class _CanteenSelectState extends State<CanteenSelect> {
                           fit: BoxFit.fitHeight),
                       //color: Colors.yellow,
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      color: Colors.white,
+                      // color: Colors.red,
                     ),
                   ),
                 ),
@@ -157,11 +165,7 @@ class _CanteenSelectState extends State<CanteenSelect> {
                   color: Colors.green[100].withOpacity(0.6),
                   child: InkWell(
                     onTap: () {
-                      print('Card tapped.');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
+                      logout();
                     },
                     child: Container(
                       margin: EdgeInsets.all(10),
@@ -169,29 +173,21 @@ class _CanteenSelectState extends State<CanteenSelect> {
                       alignment: Alignment.centerLeft,
                       height: blockHeight * 5,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Log out',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w700),
                           ),
-                          SizedBox(
-                            width: blockWidth * 32,
+                          // SizedBox(
+                          //     // width: blockWidth * 32,
+                          //     ),
+                          Icon(
+                            Icons.ac_unit,
+                            size: 23,
+                            color: Colors.black,
                           ),
-                          IconButton(
-                              alignment: Alignment.topRight,
-                              icon: Icon(
-                                Icons.logout,
-                                size: 23,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Login()),
-                                );
-                              })
                         ],
                       ),
                     ),
@@ -199,9 +195,8 @@ class _CanteenSelectState extends State<CanteenSelect> {
                 ),
               ),
               SizedBox(
-                height: blockHeight*20,
+                height: blockHeight * 20,
               ),
-              
             ],
           ),
         ),

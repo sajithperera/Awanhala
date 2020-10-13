@@ -289,7 +289,7 @@ class _AddToCartState extends State<AddToCart> {
                                   // ***** should connect with database (increase item count from database) *****
                                   if (itemCount != 0) {
                                     itemCount = itemCount - 1;
-                                    // available++;
+                                    available++;
                                     totalPrice =
                                         this.widget.item.price.toDouble() *
                                             itemCount;
@@ -338,7 +338,7 @@ class _AddToCartState extends State<AddToCart> {
                                   // ***** should connect with database (decrese item count from database) *****
                                   setState(() {
                                     itemCount = itemCount + 1;
-                                    //   available--;
+                                    available--;
                                     totalPrice =
                                         this.widget.item.price.toDouble() *
                                             itemCount;
@@ -415,7 +415,7 @@ class _AddToCartState extends State<AddToCart> {
                         textColor: Colors.white,
                         splashColor: Colors.green,
                         color: Colors.green[300],
-                        onPressed: (available == 0)
+                        onPressed: (available == 0 || itemCount > available)
                             ? null
                             : () {
                                 //navigate to CART

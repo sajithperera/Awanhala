@@ -52,8 +52,10 @@ class Awanhala extends StatelessWidget {
                 );
               } else {
                 if (Hive.box('user').get('email') == null) {
+                  print("not logged in");
                   return Login();
                 } else {
+                  print("logged in");
                   return CanteenSelect();
                 }
               }
