@@ -165,33 +165,35 @@ class _AddToCartState extends State<AddToCart> {
                           "images/foods/plainTea.jpg"), //****  ITEM IMAGE
                     ),
                   ),
-                  Container(
-                    height: blockHeight * 8,
-                    decoration: BoxDecoration(
-                        color: Colors.redAccent,
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        )),
-                    alignment: Alignment.center,
-                    width: blockWidth * 80,
+                  AbsorbPointer(
                     child: Container(
-                      height: blockHeight * 6,
-                      // color: Colors.yellow,
+                      height: blockHeight * 8,
+                      decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          )),
                       alignment: Alignment.center,
-                      child: RatingBar(
-                        initialRating: rating,
-                        minRating: 0,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
+                      width: blockWidth * 80,
+                      child: Container(
+                        height: blockHeight * 6,
+                        // color: Colors.yellow,
+                        alignment: Alignment.center,
+                        child: RatingBar(
+                          initialRating: rating,
+                          minRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
                         ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
                       ),
                     ),
                   ),
