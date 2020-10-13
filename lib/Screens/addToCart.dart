@@ -22,7 +22,7 @@ class _AddToCartState extends State<AddToCart> {
   int available =
       0; // in  the begining this value is set to 0//then we get the avaialbe value from the database
 
-  double rating;
+  double rating = 0;
 
   @override
   void initState() {
@@ -52,7 +52,19 @@ class _AddToCartState extends State<AddToCart> {
             jsonResponse['message']['count_${widget.item.id}'];
       });
 
-      // if (jsonResponse['message']) {}
+      if (jsonResponse['message']['rating_${widget.item.id}'] != null &&
+          jsonResponse['message']['rating_${widget.item.id}'] != 0) {
+        print("there is a rating for this item");
+
+        setState(() {
+          rating = jsonResponse['message']['rating_${widget.item.id}'] /
+              jsonResponse['message']['rating_count_${widget.item.id}'];
+
+          print(rating);
+        });
+      } else {
+        print("there is no rating for this item");
+      }
     } else {
       print("item is not in the showcase");
     }
@@ -153,33 +165,41 @@ class _AddToCartState extends State<AddToCart> {
                           "images/foods/plainTea.jpg"), //****  ITEM IMAGE
                     ),
                   ),
-                  Container(
-                    height: blockHeight * 8,
-                    color: Colors.redAccent,
-                    alignment: Alignment.topCenter,
-                    width: blockWidth * 60,
+                  AbsorbPointer(
                     child: Container(
-                      height: blockHeight * 6,
-                      color: Colors.yellow,
+                      height: blockHeight * 8,
+                      decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          )),
                       alignment: Alignment.center,
-                      child: RatingBar(
-                        initialRating: 3,
-                        minRating: 0,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
+                      width: blockWidth * 80,
+                      child: Container(
+                        height: blockHeight * 6,
+                        // color: Colors.yellow,
+                        alignment: Alignment.center,
+                        child: RatingBar(
+                          initialRating: rating,
+                          minRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
                         ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
                       ),
                     ),
                   ),
-                  SizedBox(height: blockHeight * 0.3),
+                  SizedBox(
+                    height: blockHeight * 2,
+                  ),
                   Container(
                     width: double.infinity,
                     child: Padding(

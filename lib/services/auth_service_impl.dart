@@ -4,6 +4,7 @@ import 'package:awanahala/models/User.dart';
 import 'package:awanahala/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -38,6 +39,7 @@ class AuthServiceImpl extends AuthService {
         );
 
         // Future.delayed(Duration(seconds: 15));
+        Hive.box('user').put('email', email.toLowerCase().trim());
         Get.toNamed("/canteenSelect");
       } else {
         print('login error');
@@ -70,7 +72,7 @@ class AuthServiceImpl extends AuthService {
     print("inside signup method");
     try {
       final body = jsonEncode({
-        "email": user.email,
+        "email": user.email.toLowerCase().trim(),
         "password": user.passWordHash,
         "username": user.userName,
         "fullName": user.fullName,
@@ -109,7 +111,7 @@ class AuthServiceImpl extends AuthService {
       } else {
         print('login error');
         Get.snackbar(
-          "Login error",
+          "Signup error",
           jsonResponse['message'],
           icon: Icon(
             Icons.error,

@@ -4,6 +4,7 @@ import 'package:awanahala/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 import 'login.dart';
 import 'signUp.dart';
@@ -24,7 +25,7 @@ class Awanhala extends StatelessWidget {
       child: GetMaterialApp(
         title: 'Awanahala',
         debugShowCheckedModeBanner: false,
-        initialRoute: '/canteenSelect',
+        initialRoute: '/login',
         routes: {
           '/login': (context) => Login(),
           '/sighUp': (context) => SignUp(),
@@ -38,6 +39,33 @@ class Awanhala extends StatelessWidget {
           '/scanQR': (context) => ScanQR(),
           '/profile': (context) => UserProfile(),
         },
+        home: FutureBuilder(
+          future: Hive.openBox('user'), //user data us stored in the hive box
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              print("opening box");
+              if (snapshot.hasError) {
+                return Scaffold(
+                  body: Center(
+                    child: Text(snapshot.error.toString()),
+                  ),
+                );
+              } else {
+                if (Hive.box('user').get('email') == null) {
+                  return Login();
+                } else {
+                  return CanteenSelect();
+                }
+              }
+            } else {
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }
