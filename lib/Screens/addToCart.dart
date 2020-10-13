@@ -1,27 +1,61 @@
+import 'dart:convert';
+
+import 'package:awanahala/models/Items.dart';
 import 'package:flutter/material.dart';
 import 'package:awanahala/shared/sizeConfig.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:http/http.dart' as http;
 
-
-// FOR SELECTED ITEM 
+// FOR SELECTED ITEM
 class AddToCart extends StatefulWidget {
-  String itemName;
-  double unitPrice;
-  String imageURL;
-  AddToCart(this.itemName, this.unitPrice, this.imageURL);
+  final Item item;
+  AddToCart(
+    this.item,
+  );
   @override
   _AddToCartState createState() => _AddToCartState();
 }
 
 class _AddToCartState extends State<AddToCart> {
-  double totalPrice; // store the current state
-  int itemCount; // store the current state
-  int available = 11; // get from databse
+  double totalPrice = 0; // store the current state
+  int itemCount = 0; // store the current state
+  int available =
+      0; // in  the begining this value is set to 0//then we get the avaialbe value from the database
+
+  double rating;
 
   @override
   void initState() {
-    itemCount = 1;
-    totalPrice = this.widget.unitPrice; // initiall value(equal to unit price)
+    // itemCount = 1;
+    // totalPrice = this.widget.unitPrice; // initiall value(equal to unit price)
     super.initState();
+    getTodayDocument();
+  }
+
+  getTodayDocument() async {
+    var response = await http.get(
+      'http://3.223.72.19/api/history/today',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 400) {
+      return;
+    }
+    var jsonResponse = json.decode(response.body);
+    print(jsonResponse['message']);
+    if (jsonResponse['message']['initial_count_${widget.item.id}'] != null) {
+      print("item is in the show case");
+      setState(() {
+        available = jsonResponse['message']['initial_count_${widget.item.id}'] -
+            jsonResponse['message']['count_${widget.item.id}'];
+      });
+
+      // if (jsonResponse['message']) {}
+    } else {
+      print("item is not in the showcase");
+    }
   }
 
   @override
@@ -39,21 +73,20 @@ class _AddToCartState extends State<AddToCart> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    
                     child: Container(
-                      
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
                             color: Colors.red[400].withOpacity(0.9),
                             spreadRadius: 0,
                             blurRadius: 0.5,
-                            offset: Offset(0, 0), 
+                            offset: Offset(0, 0),
                           ),
                         ],
                       ),
                       height: 60,
-                      padding: EdgeInsets.only(top: 10.0, left: 10.0, right:10.0),
+                      padding:
+                          EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
                       child: Column(
                         children: <Widget>[
                           Row(
@@ -82,7 +115,7 @@ class _AddToCartState extends State<AddToCart> {
                                   ),
                                 ),
                               ),
-                              IconButton(                      
+                              IconButton(
                                 icon: Icon(
                                   Icons.shopping_cart,
                                   color: Colors.white70,
@@ -94,17 +127,16 @@ class _AddToCartState extends State<AddToCart> {
                                 },
                               ),
                             ],
-                          ),   
+                          ),
                         ],
                       ),
                     ),
                   ),
-
-
                   Container(
                     height: blockHeight * 33,
                     width: blockHeight * 33,
-                    margin: EdgeInsets.only(top: blockHeight * 7, bottom: blockHeight * 4.5),
+                    margin: EdgeInsets.only(
+                        top: blockHeight * 7, bottom: blockHeight * 4.5),
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -117,21 +149,49 @@ class _AddToCartState extends State<AddToCart> {
                       borderRadius: BorderRadius.all(Radius.circular(100)),
                     ),
                     child: CircleAvatar(
-                      backgroundImage: AssetImage("images/foods/plainTea.jpg"), //****  ITEM IMAGE  
+                      backgroundImage: AssetImage(
+                          "images/foods/plainTea.jpg"), //****  ITEM IMAGE
+                    ),
+                  ),
+                  Container(
+                    height: blockHeight * 8,
+                    color: Colors.redAccent,
+                    alignment: Alignment.topCenter,
+                    width: blockWidth * 60,
+                    child: Container(
+                      height: blockHeight * 6,
+                      color: Colors.yellow,
+                      alignment: Alignment.center,
+                      child: RatingBar(
+                        initialRating: 3,
+                        minRating: 0,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(height: blockHeight * 0.3),
                   Container(
                     width: double.infinity,
                     child: Padding(
-                      padding: EdgeInsets.only(left: blockWidth * 10, right: blockWidth * 10),
+                      padding: EdgeInsets.only(
+                          left: blockWidth * 10, right: blockWidth * 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Column(
                             children: <Widget>[
                               Text(
-                                this.widget.itemName, //*** */ ITEM NAEM
+                                widget.item.name, //*** */ ITEM NAEM
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w300,
@@ -149,7 +209,8 @@ class _AddToCartState extends State<AddToCart> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: this.widget.unitPrice.toString(), // **** UNIT PRICE
+                                      text: widget.item.price
+                                          .toString(), // **** UNIT PRICE
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16.0,
@@ -173,7 +234,8 @@ class _AddToCartState extends State<AddToCart> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: this.totalPrice.toString(), // *** TOTAL PRICE
+                                  text:
+                                      totalPrice.toString(), // *** TOTAL PRICE
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 35.0,
@@ -188,6 +250,8 @@ class _AddToCartState extends State<AddToCart> {
                     ),
                   ),
                   Container(
+                    // color: Colors.yellow,
+                    alignment: Alignment.center,
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: blockHeight * 3,
@@ -203,10 +267,12 @@ class _AddToCartState extends State<AddToCart> {
                               onPressed: () {
                                 setState(() {
                                   // ***** should connect with database (increase item count from database) *****
-                                  if (itemCount > 1) {
+                                  if (itemCount != 0) {
                                     itemCount = itemCount - 1;
-                                    available++;
-                                    totalPrice = this.widget.unitPrice * itemCount;
+                                    // available++;
+                                    totalPrice =
+                                        this.widget.item.price.toDouble() *
+                                            itemCount;
                                   }
                                 });
                               },
@@ -222,6 +288,7 @@ class _AddToCartState extends State<AddToCart> {
                           ),
                           // ItemCount(),
                           Container(
+                            // color: Colors.redAccent,
                             height: 70.0,
                             width: 70.0,
                             child: Center(
@@ -247,12 +314,14 @@ class _AddToCartState extends State<AddToCart> {
                             padding: EdgeInsets.only(bottom: blockHeight * 0.5),
                             child: MaterialButton(
                               onPressed: () {
-                                if (available >= 1) {
+                                if (itemCount < available) {
                                   // ***** should connect with database (decrese item count from database) *****
                                   setState(() {
                                     itemCount = itemCount + 1;
-                                    available--;
-                                    totalPrice = this.widget.unitPrice * itemCount;
+                                    //   available--;
+                                    totalPrice =
+                                        this.widget.item.price.toDouble() *
+                                            itemCount;
                                   });
                                 }
                               },
@@ -310,6 +379,7 @@ class _AddToCartState extends State<AddToCart> {
                           top: blockHeight * 1.5,
                           bottom: blockHeight * 1.5),
                       child: MaterialButton(
+                        disabledColor: Colors.grey,
                         height: blockHeight * 8.5,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50.0),
@@ -325,15 +395,18 @@ class _AddToCartState extends State<AddToCart> {
                         textColor: Colors.white,
                         splashColor: Colors.green,
                         color: Colors.green[300],
-                        onPressed: () {
-                          //navigate to CART
-                        },
+                        onPressed: (available == 0)
+                            ? null
+                            : () {
+                                //navigate to CART
+                              },
                       ),
                     ),
                   ),
                   SizedBox(height: blockHeight * 1.5),
                   Padding(
-                    padding: EdgeInsets.only(left: blockWidth * 8, right: blockWidth * 8),
+                    padding: EdgeInsets.only(
+                        left: blockWidth * 8, right: blockWidth * 8),
                     child: Divider(
                       color: Colors.green[900],
                     ),
@@ -349,7 +422,7 @@ class _AddToCartState extends State<AddToCart> {
                       ),
                       child: Text(
                         // *** users comments
-                        "කන්නෙපා මල ජරාව. ලුනුත් නෑ, බොක හොද්ද වගේ මෙලෝ රහක් නෑ..",
+                        " මල ජරාව. ලුනුත් නෑ, බොක හොද්ද වගේ මෙලෝ රහක් නෑ..",
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w300,
