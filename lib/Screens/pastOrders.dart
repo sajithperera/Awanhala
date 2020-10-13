@@ -43,7 +43,7 @@ class _PastOrdersState extends State<PastOrders> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         child: Card(
-          color: Colors.green[100].withOpacity(0.6),
+          color: Colors.green[200],
           child: InkWell(
             onTap: () {},
             child: Container(
