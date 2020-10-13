@@ -147,7 +147,7 @@ class _FoodItemCategoryState extends State<FoodItemCategory> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => AddToCart("", 2, imageURL),
+              builder: (BuildContext context) => AddToCart(itembody),
             ),
           );
         },
