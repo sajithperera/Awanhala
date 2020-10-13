@@ -16,14 +16,29 @@ class CartBloc extends Bloc<CartEvent, CartModel> {
       case CartEventType.addItemsToCart:
         CartModel cartModel = state;
 
-        for (var i = 0; i < event.cartModel.items.length; i++) {
-          cartModel.items.add(event.cartModel.items[i]);
-          cartModel.price = cartModel.price +
-              (event.cartModel.items[i].price) * event.cartModel.items[i].qty;
+        //if the item alredy exist in the cart we have to increase its count rather than adding it as a separate item
+        CartModel cartModelInEvent = event.cartModel;
 
-          cartModel.quantity =
-              cartModel.quantity + event.cartModel.items[i].qty;
+        if (cartModel.items.length == 0) {
+          cartModel.items.add(event.cartModel.items.first);
+        } else {
+          for (var i = 0; i < cartModel.items.length; i++) {
+            if (cartModel.items[i].id == cartModelInEvent.items.first.id) {
+              //item already exist in the cart
+              //so we have to increment its count
+              cartModel.items[i].qty += cartModelInEvent.items.first.qty;
+            } else {
+              cartModel.items.add(event.cartModel.items.first);
+            }
+          }
         }
+
+        cartModel.price = cartModel.price +
+            (event.cartModel.items.first.price) *
+                event.cartModel.items.first.qty;
+
+        cartModel.quantity =
+            cartModel.quantity + event.cartModel.items.first.qty;
 
         yield cartModel;
 
