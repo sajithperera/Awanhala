@@ -111,6 +111,47 @@ class _CanteenSelectState extends State<CanteenSelect> {
                   ),
                 ),
               ),
+              
+    Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Container(
+        height: 300,
+        child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Image.network(
+                    "http://s3.amazonaws.com/foodspotting-ec2/reviews/2310941/thumb_600.jpg?1346218231",
+                    fit: BoxFit.cover,
+                  ),
+                  height: 200,
+                  color: Colors.blue,
+                  width: MediaQuery.of(context).size.width - 64,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Text(
+                    "Fish Rolls",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("Price : 380"),
+                    Text("Quantity : 4"),
+                  ],
+                ),
+              ],
+            )),
+      ),
+    ),
+    
+
+
               ListTile(
                 title: Card(
                   color: Colors.green[100].withOpacity(0.6),
