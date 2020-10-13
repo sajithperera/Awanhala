@@ -1,9 +1,14 @@
 import 'dart:convert';
 
+import 'package:awanahala/bloc/CartBloc.dart';
+import 'package:awanahala/events/CartEvent.dart';
+import 'package:awanahala/models/CartModel.dart';
 import 'package:awanahala/models/Items.dart';
 import 'package:flutter/material.dart';
 import 'package:awanahala/shared/sizeConfig.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 // FOR SELECTED ITEM
@@ -127,17 +132,34 @@ class _AddToCartState extends State<AddToCart> {
                                   ),
                                 ),
                               ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.shopping_cart,
-                                  color: Colors.white70,
-                                ),
-                                splashColor: Colors.black,
-                                iconSize: 20.0,
-                                onPressed: () {
-                                  // navigate to shopping cart
+                              BlocBuilder<CartBloc, CartModel>(
+                                builder: (context, state) {
+                                  return IconButton(
+                                    icon: Icon(
+                                      Icons.shopping_cart,
+                                      color: Colors.black,
+                                    ),
+                                    disabledColor: Colors.grey,
+                                    splashColor: Colors.black,
+                                    iconSize: 20.0,
+                                    onPressed: (state.items.length == 0)
+                                        ? () {
+                                            Get.snackbar("Cart empty",
+                                                "Your cart is empty",
+                                                backgroundColor: Colors.white,
+                                                icon: Icon(
+                                                  Icons.error,
+                                                  color: Colors.red,
+                                                ));
+                                          }
+                                        : () {
+                                            // navigate to shopping cart
+                                            print("cart has items");
+                                            print(state.items);
+                                          },
+                                  );
                                 },
-                              ),
+                              )
                             ],
                           ),
                         ],
@@ -415,10 +437,18 @@ class _AddToCartState extends State<AddToCart> {
                         textColor: Colors.white,
                         splashColor: Colors.green,
                         color: Colors.green[300],
-                        onPressed: (available == 0 || itemCount > available)
+                        onPressed: (available == 0 ||
+                                itemCount > available ||
+                                itemCount == 0)
                             ? null
                             : () {
                                 //navigate to CART
+                                CartItem cartItem = CartItem(
+                                    id: widget.item.id,
+                                    price: widget.item.price.toDouble(),
+                                    qty: itemCount);
+                                BlocProvider.of<CartBloc>(context)
+                                    .add(CartEvent.addItemsToCart(cartItem));
                               },
                       ),
                     ),

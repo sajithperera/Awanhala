@@ -1,5 +1,5 @@
 class CartModel {
-  int cusID; //id of the customer
+  String cusID; //id of the customer
   double price; //price of the order
   int quantity;
   List<CartItem> items;

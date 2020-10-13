@@ -18,6 +18,7 @@ class CartEvent {
   CartEvent.addItemsToCart(CartItem cartItem) {
     this.cartEventType = CartEventType.addItemsToCart;
     cartModel = CartModel();
+    cartModel.items = [];
 
     this.cartModel.items.add(cartItem);
   }
