@@ -1,3 +1,10 @@
+import 'package:awanahala/models/CartItem.dart';
+import 'package:json_annotation/json_annotation.dart';
+// part 'CartItem.g.dart';
+
+part 'CartModel.g.dart';
+
+@JsonSerializable()
 class CartModel {
   String cusID; //id of the customer
   double price; //price of the order
@@ -10,18 +17,9 @@ class CartModel {
     this.quantity,
     this.items,
   });
-}
 
-class CartItem {
-  String id; //id of the item
-  double price; //price of the single item
-  int qty; //quantity of items
-  String itemName;
+  factory CartModel.fromJson(Map<String, dynamic> json) =>
+      _$CartModelFromJson(json);
 
-  CartItem({
-    this.id,
-    this.price,
-    this.qty,
-    this.itemName,
-  });
+  Map<String, dynamic> toJson() => _$CartModelToJson(this);
 }

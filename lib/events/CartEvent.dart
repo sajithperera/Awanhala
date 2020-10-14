@@ -1,3 +1,4 @@
+import 'package:awanahala/models/CartItem.dart';
 import 'package:awanahala/models/CartModel.dart';
 
 enum CartEventType {

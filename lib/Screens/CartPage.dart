@@ -1,5 +1,8 @@
 import 'package:awanahala/bloc/CartBloc.dart';
+import 'package:awanahala/events/CartEvent.dart';
 import 'package:awanahala/models/CartModel.dart';
+import 'package:awanahala/service_locator/service_locator.dart';
+import 'package:awanahala/services/order_service.dart';
 import 'package:awanahala/shared/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +15,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  Orderservice orderservice = locator<Orderservice>();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -233,7 +237,9 @@ class _CartPageState extends State<CartPage> {
                         padding: EdgeInsets.all(
                           0,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          orderservice.createOrder(state, context);
+                        },
                         child: Container(
                           height: blockHeight * 6,
                           // color: Colors.greenAccent,

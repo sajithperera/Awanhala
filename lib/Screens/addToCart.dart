@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:awanahala/bloc/CartBloc.dart';
 import 'package:awanahala/events/CartEvent.dart';
+import 'package:awanahala/models/CartItem.dart';
 import 'package:awanahala/models/CartModel.dart';
 import 'package:awanahala/models/Items.dart';
 import 'package:flutter/material.dart';
