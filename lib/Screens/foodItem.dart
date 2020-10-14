@@ -1,7 +1,10 @@
 import 'package:awanahala/Screens/foodItemCategory.dart';
+import 'package:awanahala/bloc/CartBloc.dart';
+import 'package:awanahala/models/CartModel.dart';
 import 'package:awanahala/models/Items.dart';
 import 'package:awanahala/services/getItem_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class FoodItem extends StatefulWidget {
@@ -75,15 +78,33 @@ class _FoodItemState extends State<FoodItem>
                                 ),
                               ),
                             )),
-                            Container(
-                              width: 50,
-                              // color: Colors.redAccent,
-                              alignment: Alignment.center,
-                              child: Image.asset(
-                                "images/ucsc.jpg",
-                                height: 50,
-                                fit: BoxFit.cover,
-                              ),
+                            BlocBuilder<CartBloc, CartModel>(
+                              builder: (context, state) {
+                                return IconButton(
+                                  icon: Icon(
+                                    Icons.shopping_cart,
+                                    color: Colors.black,
+                                  ),
+                                  disabledColor: Colors.grey,
+                                  splashColor: Colors.black,
+                                  iconSize: 20.0,
+                                  onPressed: (state.items.length == 0)
+                                      ? () {
+                                          Get.snackbar("Cart empty",
+                                              "Your cart is empty",
+                                              backgroundColor: Colors.white,
+                                              icon: Icon(
+                                                Icons.error,
+                                                color: Colors.red,
+                                              ));
+                                        }
+                                      : () {
+                                          // navigate to shopping cart
+                                          print("cart has items");
+                                          print(state.items);
+                                        },
+                                );
+                              },
                             ),
                           ],
                         ),

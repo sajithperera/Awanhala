@@ -21,16 +21,17 @@ class AuthServiceImpl extends AuthService {
           },
           body: body);
 
-      // var jsonResponse = json.decode(response.body);
+      var jsonResponse = json.decode(response.body);
       // // print(jsonResponse);
       // print(response.body.runtimeType);
+      // print(response.body);
 
       if (response.statusCode == 200) {
         print('user login successfull');
 
         Get.snackbar(
           "Success",
-          response.body,
+          jsonResponse['message'],
           icon: Icon(
             Icons.done,
             color: Colors.green,
@@ -38,9 +39,14 @@ class AuthServiceImpl extends AuthService {
           backgroundColor: Colors.white,
         );
 
+        // print(jsonResponse['user']['_id']);
+
+        Hive.box('user').put('id', jsonResponse['user']['_id']);
+
         // Future.delayed(Duration(seconds: 15));
-        Hive.box('user').put('email', email.toLowerCase().trim());
-        Get.toNamed("/canteenSelect");
+        Hive.box('user').put('email', email.toLowerCase().trim()).then((value) {
+          Get.toNamed("/canteenSelect");
+        });
       } else {
         print('login error');
         Get.snackbar(

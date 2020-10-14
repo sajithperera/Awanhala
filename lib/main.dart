@@ -1,3 +1,4 @@
+import 'package:awanahala/bloc/CartBlocObserver.dart';
 import 'package:awanahala/bloc/SignUpBlocObserver.dart';
 import 'package:awanahala/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ void main() async {
   Hive.init(appDocumentDir.path);
 
   Bloc.observer = SignUpBlocObserver();
+  Bloc.observer = CartBlocObserver();
   setupServiceLocator();
   runApp(Awanhala());
 }

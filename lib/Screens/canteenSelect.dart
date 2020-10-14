@@ -9,6 +9,8 @@ import 'package:awanahala/services/university_service.dart';
 import 'package:awanahala/shared/sizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 import 'foodItem.dart';
 
@@ -24,6 +26,12 @@ class _CanteenSelectState extends State<CanteenSelect> {
     University(id: "0001", university: "University of Colombo"),
     University(id: "0001", university: "University of Moratuwa")
   ];
+
+  logout() {
+    print("logout");
+    Hive.box('user').clear();
+    Get.offAll(Login());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +54,7 @@ class _CanteenSelectState extends State<CanteenSelect> {
                 child: DrawerHeader(
                   child: Container(
                     // width: blockWidth*20,
-                    // height: blockHeight*40,
+                    height: blockHeight * 40,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           // scale: 1.5,
@@ -54,7 +62,7 @@ class _CanteenSelectState extends State<CanteenSelect> {
                           fit: BoxFit.fitHeight),
                       //color: Colors.yellow,
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      color: Colors.white,
+                      // color: Colors.red,
                     ),
                   ),
                 ),
@@ -111,16 +119,53 @@ class _CanteenSelectState extends State<CanteenSelect> {
                   ),
                 ),
               ),
+              
+    Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Container(
+        height: 300,
+        child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Image.network(
+                    "http://s3.amazonaws.com/foodspotting-ec2/reviews/2310941/thumb_600.jpg?1346218231",
+                    fit: BoxFit.cover,
+                  ),
+                  height: 200,
+                  color: Colors.blue,
+                  width: MediaQuery.of(context).size.width - 64,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Text(
+                    "Fish Rolls",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text("Price : 380"),
+                    Text("Quantity : 4"),
+                  ],
+                ),
+              ],
+            )),
+      ),
+    ),
+    
+
+
               ListTile(
                 title: Card(
                   color: Colors.green[100].withOpacity(0.6),
                   child: InkWell(
                     onTap: () {
-                      print('Card tapped.');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
+                      logout();
                     },
                     child: Container(
                       margin: EdgeInsets.all(10),
@@ -128,30 +173,21 @@ class _CanteenSelectState extends State<CanteenSelect> {
                       alignment: Alignment.centerLeft,
                       height: blockHeight * 5,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Log out',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w700),
                           ),
-                          SizedBox(
-                            width: blockWidth * 32,
+                          // SizedBox(
+                          //     // width: blockWidth * 32,
+                          //     ),
+                          Icon(
+                            Icons.ac_unit,
+                            size: 23,
+                            color: Colors.black,
                           ),
-                          IconButton(
-                              alignment: Alignment.topRight,
-                              icon: Icon(
-                                Icons.arrow_downward,
-                                // Icons.logout,
-                                size: 23,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Login()),
-                                );
-                              })
                         ],
                       ),
                     ),
@@ -159,9 +195,8 @@ class _CanteenSelectState extends State<CanteenSelect> {
                 ),
               ),
               SizedBox(
-                height: blockHeight*20,
+                height: blockHeight * 20,
               ),
-              
             ],
           ),
         ),

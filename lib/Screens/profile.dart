@@ -28,10 +28,10 @@ class _UserProfileState extends State<UserProfile> {
         _profilepic(),
         _divider(),
         _profiledetails(),
-        _heading("Ongoing oders"),
-        _myongoingoders(),
-        _heading("Past Orders"),
-        _mypastoders(),
+        _heading1("Ongoing oder"),
+        //_myongoingoders(),
+        _heading2("Last Order"),
+        //_mypastoders(),
       ],
     );
   }
@@ -45,7 +45,7 @@ class _UserProfileState extends State<UserProfile> {
         },
         child: CircleAvatar(
           radius: 55,
-          backgroundColor: Colors.yellow[200],
+          backgroundColor: Colors.yellow,
           child: _image != null
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(50),
@@ -62,9 +62,8 @@ class _UserProfileState extends State<UserProfile> {
                       borderRadius: BorderRadius.circular(50)),
                   width: 100,
                   height: 100,
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: Colors.grey[800],
+                  child: Image.asset(
+                     "images/awatar.png"
                   ),
                 ),
         ),
@@ -91,9 +90,14 @@ class _UserProfileState extends State<UserProfile> {
             "Theekshana sashika",
             style: TextStyle(fontSize: 20),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 10),
           Text(
             "Theekshanasashika@gmail.com",
+            style: TextStyle(fontSize: 16, color: Color(0xffaeaeae)),
+          ),
+          SizedBox(height: 10),
+          Text(
+            "+9471 3423 7869",
             style: TextStyle(fontSize: 16, color: Color(0xffaeaeae)),
           ),
           SizedBox(height: 20),
@@ -102,8 +106,7 @@ class _UserProfileState extends State<UserProfile> {
       ),
     );
   }
-
-  Widget _heading(String text) {
+  Widget _heading1(String text) {
     SizeConfig().init(context);
     double blockHeight = SizeConfig.safeBlockVertical;
     double blockWidth = SizeConfig.safeBlockHorizontal;
@@ -126,21 +129,17 @@ class _UserProfileState extends State<UserProfile> {
               SizedBox(
                 width: blockWidth * 20,
               ),
-              IconButton(
-                alignment: Alignment.centerRight,
-                icon: Icon(
-                  Icons.keyboard_arrow_right,
-                  // Icons.keyboard_arrow_right_rounded,
-                  color: Colors.green,
-                  size: blockWidth*15,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RateFood()),
-                  );
-                },
-              )
+              // IconButton(
+              //   alignment: Alignment.centerRight,
+              //   icon: Icon(
+              //     Icons.keyboard_arrow_right_rounded,
+              //     color: Colors.green,
+              //     size: blockWidth*15,
+              //   ),
+              //   onPressed: () {
+                  
+              //   },
+              // )
             ],
           ),
           Padding(
@@ -156,7 +155,71 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            height: blockHeight*3
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _heading2(String text) {
+    SizeConfig().init(context);
+    double blockHeight = SizeConfig.safeBlockVertical;
+    double blockWidth = SizeConfig.safeBlockHorizontal;
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: [
+              Container(
+                width: blockWidth * 50,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 16),
+                  child: Text(
+                    text,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: blockWidth * 20,
+              ),
+              IconButton(
+                alignment: Alignment.centerRight,
+                icon: Icon(
+
+                  Icons.access_alarm,
+                  color: Colors.green,
+                  size: blockWidth * 15,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RateFood()),
+                  );
+                },
+              )
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  height: 4,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: blockHeight*3
+          ),
         ],
       ),
     );

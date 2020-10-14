@@ -1,5 +1,7 @@
 import 'package:awanahala/Screens/profile.dart';
+import 'package:awanahala/bloc/CartBloc.dart';
 import 'package:awanahala/bloc/SignUpBloc.dart';
+import 'package:awanahala/models/CartModel.dart';
 import 'package:awanahala/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,15 +19,21 @@ import 'scanQR.dart';
 import 'canteenSelect.dart';
 import 'ratethefood.dart';
 
+//  return BlocProvider<SignUpBloc>(
+//       create: (context) => SignUpBloc(User()),
+
 class Awanhala extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SignUpBloc>(
-      create: (context) => SignUpBloc(User()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SignUpBloc>(create: (context) => SignUpBloc(User())),
+        BlocProvider<CartBloc>(create: (context) => CartBloc(CartModel())),
+      ],
       child: GetMaterialApp(
         title: 'Awanahala',
         debugShowCheckedModeBanner: false,
-        initialRoute: '/login',
+        initialRoute: '/canteenSelect',
         routes: {
           '/login': (context) => Login(),
           '/sighUp': (context) => SignUp(),
@@ -52,8 +60,10 @@ class Awanhala extends StatelessWidget {
                 );
               } else {
                 if (Hive.box('user').get('email') == null) {
+                  print("not logged in");
                   return Login();
                 } else {
+                  print("logged in");
                   return CanteenSelect();
                 }
               }
