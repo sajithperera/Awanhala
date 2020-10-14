@@ -444,9 +444,11 @@ class _AddToCartState extends State<AddToCart> {
                             : () {
                                 //navigate to CART
                                 CartItem cartItem = CartItem(
-                                    id: widget.item.id,
-                                    price: widget.item.price.toDouble(),
-                                    qty: itemCount);
+                                  id: widget.item.id,
+                                  price: widget.item.price.toDouble(),
+                                  qty: itemCount,
+                                  itemName: widget.item.name,
+                                );
                                 BlocProvider.of<CartBloc>(context)
                                     .add(CartEvent.addItemsToCart(cartItem));
                               },

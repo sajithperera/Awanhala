@@ -16,10 +16,12 @@ class CartItem {
   String id; //id of the item
   double price; //price of the single item
   int qty; //quantity of items
+  String itemName;
 
   CartItem({
     this.id,
     this.price,
     this.qty,
+    this.itemName,
   });
 }

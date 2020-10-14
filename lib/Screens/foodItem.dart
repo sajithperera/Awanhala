@@ -1,3 +1,4 @@
+import 'package:awanahala/Screens/CartPage.dart';
 import 'package:awanahala/Screens/foodItemCategory.dart';
 import 'package:awanahala/bloc/CartBloc.dart';
 import 'package:awanahala/models/CartModel.dart';
@@ -102,6 +103,7 @@ class _FoodItemState extends State<FoodItem>
                                           // navigate to shopping cart
                                           print("cart has items");
                                           print(state.items);
+                                          Get.to(CartPage());
                                         },
                                 );
                               },
