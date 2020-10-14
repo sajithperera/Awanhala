@@ -6,6 +6,4 @@ class User {
   String fullName;
   String phoneNumber;
   String nic;
-  String university;
-  String faculty;
 }

@@ -25,13 +25,6 @@ class SignUpBloc extends Bloc<SignUpEvent, User> {
         yield newUserState;
         break;
 
-      case SignUpEventyType.addFinalData:
-        User newUserState = state;
-        newUserState.university = event.user.university;
-        newUserState.faculty = event.user.faculty;
-        yield newUserState;
-        break;
-
       default:
         throw Exception("Event not found $event");
     }

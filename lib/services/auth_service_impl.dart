@@ -4,6 +4,7 @@ import 'package:awanahala/models/User.dart';
 import 'package:awanahala/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -38,6 +39,7 @@ class AuthServiceImpl extends AuthService {
         );
 
         // Future.delayed(Duration(seconds: 15));
+        Hive.box('user').put('email', email.toLowerCase().trim());
         Get.toNamed("/canteenSelect");
       } else {
         print('login error');
@@ -70,24 +72,24 @@ class AuthServiceImpl extends AuthService {
     print("inside signup method");
     try {
       final body = jsonEncode({
-        "email": user.email,
+        "email": user.email.toLowerCase().trim(),
         "password": user.passWordHash,
         "username": user.userName,
         "fullName": user.fullName,
         "phoneNumber": user.phoneNumber,
         "nic": user.nic,
-        "university": user.university,
-        "faculty": user.faculty
+        "credits": 0,
       });
-
       var url = 'http://3.223.72.19/api/user/register';
+
+      // var url = 'http://3.223.72.19/api/user/register';
       var response = await http.post(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: body);
 
-      // var jsonResponse = json.decode(response.body);
+      var jsonResponse = json.decode(response.body);
       // // print(jsonResponse);
       // print(response.body.runtimeType);
 
@@ -109,8 +111,8 @@ class AuthServiceImpl extends AuthService {
       } else {
         print('login error');
         Get.snackbar(
-          "Login error",
-          response.body,
+          "Signup error",
+          jsonResponse['message'],
           icon: Icon(
             Icons.error,
             color: Colors.red,
@@ -119,7 +121,7 @@ class AuthServiceImpl extends AuthService {
         );
       }
     } on SocketException catch (e) {
-      // print(e.message);
+      print(e.message);
       Get.snackbar(
         "Error occured",
         e.toString(),

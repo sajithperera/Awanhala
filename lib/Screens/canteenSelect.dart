@@ -1,5 +1,8 @@
 import 'dart:ui';
 
+import 'package:awanahala/Screens/login.dart';
+import 'package:awanahala/Screens/pastOrders.dart';
+import 'package:awanahala/Screens/profile.dart';
 import 'package:awanahala/models/University.dart';
 import 'package:awanahala/service_locator/service_locator.dart';
 import 'package:awanahala/services/university_service.dart';
@@ -17,6 +20,11 @@ class CanteenSelect extends StatefulWidget {
 class _CanteenSelectState extends State<CanteenSelect> {
   final UniversityService universityService = locator<UniversityService>();
 
+  List<University> universities = [
+    University(id: "0001", university: "University of Colombo"),
+    University(id: "0001", university: "University of Moratuwa")
+  ];
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -29,27 +37,141 @@ class _CanteenSelectState extends State<CanteenSelect> {
           // automaticallyImplyLeading: false,
           backgroundColor: Colors.red[400],
         ),
-        drawer: Drawer(),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              Container(
+                height: blockHeight * 35,
+                child: DrawerHeader(
+                  child: Container(
+                    // width: blockWidth*20,
+                    // height: blockHeight*40,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          scale: 1.5,
+                          image: AssetImage("images/Cantima.png"),
+                          fit: BoxFit.fitHeight),
+                      //color: Colors.yellow,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Card(
+                  color: Colors.green[100].withOpacity(0.6),
+                  child: InkWell(
+                    onTap: () {
+                      print('Card tapped.');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UserProfile()),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
+                      alignment: Alignment.centerLeft,
+                      height: blockHeight * 5,
+                      child: Text(
+                        'Profile',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Card(
+                  color: Colors.green[100].withOpacity(0.6),
+                  child: InkWell(
+                    onTap: () {
+                      print('Card tapped.');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PastOrders()),
+                      );
+
+                      //past order widget list
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
+                      alignment: Alignment.centerLeft,
+                      height: blockHeight * 5,
+                      child: Text(
+                        'Past Orders',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Card(
+                  color: Colors.green[100].withOpacity(0.6),
+                  child: InkWell(
+                    onTap: () {
+                      print('Card tapped.');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
+                      alignment: Alignment.centerLeft,
+                      height: blockHeight * 5,
+                      child: Row(
+                        children: [
+                          Text(
+                            'Log out',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(
+                            width: blockWidth * 32,
+                          ),
+                          IconButton(
+                              alignment: Alignment.topRight,
+                              icon: Icon(
+                                Icons.logout,
+                                size: 23,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Login()),
+                                );
+                              })
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: blockHeight*20,
+              ),
+              
+            ],
+          ),
+        ),
         body: Container(
           padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0),
-          child: FutureBuilder(
-            future: universityService.getUniversities(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                List<University> universities = snapshot.data;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, position) {
-                    return buildListItem(
-                        universities[position].university, "images/ucsc.jpg");
-                  },
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: universities.length,
+            itemBuilder: (context, position) {
+              return buildListItem(
+                  universities[position].university, "images/ucsc.jpg");
             },
           ),
         ),

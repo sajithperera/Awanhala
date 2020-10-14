@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
         child: RaisedButton(onPressed: (){
          Navigator.push(context,MaterialPageRoute(builder: (context)=>UserProfile()));
         },
-        child: Text("fuck me"),),
+        child: Text("hai me"),),
       ),
     );
   }

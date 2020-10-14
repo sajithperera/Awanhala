@@ -1,10 +1,17 @@
+import 'package:awanahala/models/Items.dart';
+import 'package:awanahala/service_locator/service_locator.dart';
+import 'package:awanahala/services/getItem_service.dart';
 import 'package:flutter/material.dart';
 
 import 'addToCart.dart';
 
 class FoodItemCategory extends StatefulWidget {
-  String category;
-  FoodItemCategory(this.category);
+  final String category;
+  final int catID;
+  FoodItemCategory(
+    this.category,
+    this.catID,
+  );
   @override
   _FoodItemCategoryState createState() => _FoodItemCategoryState();
 }
@@ -14,6 +21,7 @@ class _FoodItemCategoryState extends State<FoodItemCategory> {
   String itemName;
   List<String> items = List();
   List<double> unitPrice = List();
+  final HttpService httpService = locator<HttpService>();
 
   @override
   void initState() {
@@ -26,21 +34,45 @@ class _FoodItemCategoryState extends State<FoodItemCategory> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: EdgeInsets.only(left: 10.0, right: 10.0),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: items.length,
-        itemBuilder: (context, position) {
-          return buildListItem(items[position], unitPrice[position], "images/art.jpg");
+      child: FutureBuilder(
+        future: httpService.getAllItemsOfaGivencategory(widget.catID),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            print(snapshot.data);
+            if (snapshot.data.length == 0) {
+              return Center(
+                child: Text(
+                  "Sorry there are no items from this category",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              );
+            } else {
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, position) {
+                  return buildListItem(
+                      "images/art.jpg", snapshot.data[position]);
+                },
+              );
+            }
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         },
       ),
     );
   }
 
-  buildListItem(String item, double unitPrice, String imageURL) {
+  buildListItem(String imageURL, Item itembody) {
     return Container(
       height: 100,
       padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
@@ -69,7 +101,7 @@ class _FoodItemCategoryState extends State<FoodItemCategory> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      item,
+                      itembody.name,
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w300,
@@ -88,7 +120,7 @@ class _FoodItemCategoryState extends State<FoodItemCategory> {
                             ),
                           ),
                           TextSpan(
-                            text: unitPrice.toString(),
+                            text: itembody.price.toString(),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
@@ -115,7 +147,7 @@ class _FoodItemCategoryState extends State<FoodItemCategory> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => AddToCart(item, unitPrice, imageURL),
+              builder: (BuildContext context) => AddToCart(itembody),
             ),
           );
         },

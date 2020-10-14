@@ -7,7 +7,7 @@ class Item {
   final int category;
   final String image;
   final int time;
-  final bool vegetarian;
+  final bool veg;
   final String desc;
 
   Item({
@@ -17,7 +17,7 @@ class Item {
     @required this.category,
     @required this.image,
     @required this.time,
-    @required this.vegetarian,
+    @required this.veg,
     @required this.desc,
   });
 
@@ -29,7 +29,7 @@ class Item {
       category: json['category'] as int,
       image: json['image'] as String,
       time: json['time'] as int,
-      vegetarian: json['vegetarian'] as bool,
+      veg: json['vegetarian'] as bool,
       desc: json['desc'] as String,
     );
   }

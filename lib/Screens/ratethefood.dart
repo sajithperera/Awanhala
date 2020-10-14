@@ -29,7 +29,9 @@ class _RateFoodState extends State<RateFood> {
               size: 40,
               color: Colors.white,
             ),
-            onPressed: (null),
+            onPressed: (){
+              Navigator.pop(context);
+            },
             //should add selection drop down
           ),
           title: Text("Rate the Food"),

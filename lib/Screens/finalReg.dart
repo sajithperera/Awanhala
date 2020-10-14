@@ -17,8 +17,8 @@ class _FinalRegState extends State<FinalReg> {
 
   signupeFun(User user) {
     print(user.email);
-    user.faculty = _selectedFac;
-    user.university = _selectedUni;
+    // user.faculty = _selectedFac;
+    // user.university = _selectedUni;
     authService.signUp(user);
   }
 

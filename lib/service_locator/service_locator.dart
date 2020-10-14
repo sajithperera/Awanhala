@@ -1,6 +1,6 @@
-import 'package:awanahala/models/University.dart';
 import 'package:awanahala/services/auth_service.dart';
 import 'package:awanahala/services/auth_service_impl.dart';
+import 'package:awanahala/services/getItem_service.dart';
 import 'package:awanahala/services/university_service.dart';
 import 'package:awanahala/services/university_service_impl.dart';
 import 'package:get_it/get_it.dart';
@@ -12,4 +12,6 @@ setupServiceLocator() {
 
   locator
       .registerLazySingleton<UniversityService>(() => UniversityServiceImpl());
+
+  locator.registerLazySingleton(() => HttpService());
 }
