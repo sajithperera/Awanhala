@@ -15,8 +15,10 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _body(),
+    return SafeArea(
+      child: Scaffold(
+        body: _body(),
+      ),
     );
   }
 
@@ -127,7 +129,8 @@ class _UserProfileState extends State<UserProfile> {
               IconButton(
                 alignment: Alignment.centerRight,
                 icon: Icon(
-                  Icons.keyboard_arrow_right_rounded,
+                  Icons.keyboard_arrow_right,
+                  // Icons.keyboard_arrow_right_rounded,
                   color: Colors.green,
                   size: blockWidth*15,
                 ),

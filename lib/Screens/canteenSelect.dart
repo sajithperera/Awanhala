@@ -49,7 +49,7 @@ class _CanteenSelectState extends State<CanteenSelect> {
                     // height: blockHeight*40,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          scale: 1.5,
+                          // scale: 1.5,
                           image: AssetImage("images/Cantima.png"),
                           fit: BoxFit.fitHeight),
                       //color: Colors.yellow,
@@ -140,7 +140,8 @@ class _CanteenSelectState extends State<CanteenSelect> {
                           IconButton(
                               alignment: Alignment.topRight,
                               icon: Icon(
-                                Icons.logout,
+                                Icons.arrow_downward,
+                                // Icons.logout,
                                 size: 23,
                                 color: Colors.black,
                               ),

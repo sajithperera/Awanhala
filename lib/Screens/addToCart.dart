@@ -132,7 +132,6 @@ class _AddToCartState extends State<AddToCart> {
                                   Icons.shopping_cart,
                                   color: Colors.white70,
                                 ),
-                                splashColor: Colors.black,
                                 iconSize: 20.0,
                                 onPressed: () {
                                   // navigate to shopping cart
