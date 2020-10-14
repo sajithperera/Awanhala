@@ -132,6 +132,7 @@ class _AddToCartState extends State<AddToCart> {
                                   ),
                                 ),
                               ),
+
                               BlocBuilder<CartBloc, CartModel>(
                                 builder: (context, state) {
                                   return IconButton(

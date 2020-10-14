@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:awanahala/Screens/canteenCredit.dart';
 import 'package:awanahala/Screens/login.dart';
 import 'package:awanahala/Screens/pastOrders.dart';
 import 'package:awanahala/Screens/profile.dart';
@@ -57,7 +58,7 @@ class _CanteenSelectState extends State<CanteenSelect> {
                     height: blockHeight * 40,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          scale: 1.5,
+                          // scale: 1.5,
                           image: AssetImage("images/Cantima.png"),
                           fit: BoxFit.fitHeight),
                       //color: Colors.yellow,
@@ -86,7 +87,7 @@ class _CanteenSelectState extends State<CanteenSelect> {
                       child: Text(
                         'Profile',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w700),
+                            fontSize: 18, fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),
@@ -113,7 +114,34 @@ class _CanteenSelectState extends State<CanteenSelect> {
                       child: Text(
                         'Past Orders',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w700),
+                            fontSize: 18, fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Card(
+                  color: Colors.green[100].withOpacity(0.6),
+                  child: InkWell(
+                    onTap: () {
+                      print('Card tapped.');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CanteenCredit()),
+                      );
+
+                      //past order widget list
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
+                      alignment: Alignment.centerLeft,
+                      height: blockHeight * 5,
+                      child: Text(
+                        'Canteen Credits',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),
