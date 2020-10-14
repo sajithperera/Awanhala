@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:awanahala/shared/sizeConfig.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+
+import 'package:http/http.dart' as http;
 
 class PastOrders extends StatefulWidget {
   @override
@@ -8,6 +13,35 @@ class PastOrders extends StatefulWidget {
 }
 
 class _PastOrdersState extends State<PastOrders> {
+  var jsonResponse;
+  getPastOrders() async {
+    String userId = Hive.box("user").get('id');
+    var url = 'http://3.223.72.19/api/order/getallorders/' + userId;
+
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    setState(() {
+      jsonResponse = json.decode(response.body);
+    });
+    print(jsonResponse.length);
+    if (response.statusCode == 200) {
+      print("orders fetched successfully");
+    } else {
+      print("error occured");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPastOrders();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,21 +55,53 @@ class _PastOrdersState extends State<PastOrders> {
   }
 
   Widget _body() {
-    return ListView(
-        children: <Widget>[
-    _listView(),
-    _listView(),
-    _listView(),
-    _listView(),
-    _listView(),
-    _listView(),
-    _listView(),
-    _listView(),
-        ],
-      );
+    return ListView.builder(
+      itemCount: (jsonResponse == null) ? 0 : jsonResponse.length,
+      itemBuilder: (BuildContext context, int index) {
+        return orderView(jsonResponse[index]);
+      },
+    );
   }
 
-  Widget _listView() {
+  Widget orderView(responseBody) {
+    return Card(
+      elevation: 20,
+      child: Container(
+        padding: EdgeInsets.all(
+          10,
+        ),
+        margin: EdgeInsets.symmetric(
+          vertical: 5,
+        ),
+        // height: 70,
+        // color: Colors.redAccent,
+        alignment: Alignment.center,
+        child: Column(
+          children: [
+            Container(
+                height: 30,
+                // color: Colors.orange,
+                alignment: Alignment.centerLeft,
+                child: Text("Order ID : " + responseBody['_id'])),
+            Container(
+              height: 30,
+              // color: Colors.green,
+              alignment: Alignment.centerLeft,
+              child: Text("Date : " + responseBody['date']),
+            ),
+            Container(
+              height: 30,
+              // color: Colors.green,
+              alignment: Alignment.centerLeft,
+              child: Text("Rs .  " + responseBody['price'].toString()),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _listView(responseBody) {
     SizeConfig().init(context);
     double blockHeight = SizeConfig.safeBlockVertical;
     double blockWidth = SizeConfig.safeBlockHorizontal;
@@ -63,17 +129,17 @@ class _PastOrdersState extends State<PastOrders> {
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal:10.0),
+                    margin: EdgeInsets.symmetric(horizontal: 10.0),
                     height: 40.0,
                     width: 0.5,
                     color: Colors.green[900],
                   ),
                   Text(
-                    'Total R.s 250',
+                    'Total R.s ' + responseBody['price'].toString(),
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal:10.0),
+                    margin: EdgeInsets.symmetric(horizontal: 10.0),
                     height: 40.0,
                     width: 0.5,
                     color: Colors.green[900],
