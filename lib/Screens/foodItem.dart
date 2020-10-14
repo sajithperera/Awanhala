@@ -114,7 +114,7 @@ class _FoodItemState extends State<FoodItem>
                   ),
                   Container(
                     height: 50,
-                    color: Colors.grey,
+                    color: Colors.green[300],
                     child: TabBar(tabs: [
                       Text("Short Eats"),
                       Text("Rice and Curry"),
@@ -123,8 +123,10 @@ class _FoodItemState extends State<FoodItem>
                     ]),
                   ),
                 ],
-              )),
-          body: TabBarView(children: [
+              ),
+            ),
+          body:
+          TabBarView(children: [
             FoodItemCategory("Breakfirst", 0),
             FoodItemCategory("Lunch", 1),
             FoodItemCategory("Short Eats", 2),

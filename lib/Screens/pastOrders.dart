@@ -40,8 +40,9 @@ class _PastOrdersState extends State<PastOrders> {
     double blockHeight = SizeConfig.safeBlockVertical;
     double blockWidth = SizeConfig.safeBlockHorizontal;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0),
       child: Container(
+        height: 60.0,
         child: Card(
           color: Colors.green[200],
           child: InkWell(
@@ -52,27 +53,34 @@ class _PastOrdersState extends State<PastOrders> {
               alignment: Alignment.centerLeft,
               height: blockHeight * 5,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     width: blockWidth * 3,
                   ),
                   Text(
                     'Order 01',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
-                  SizedBox(
-                    width: blockWidth * 5,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal:10.0),
+                    height: 40.0,
+                    width: 0.5,
+                    color: Colors.green[900],
                   ),
                   Text(
-                    'Total Price R.s 250/',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                    'Total R.s 250',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(
-                    width: blockWidth * 5,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal:10.0),
+                    height: 40.0,
+                    width: 0.5,
+                    color: Colors.green[900],
                   ),
                   Text(
                     '2020-10-13',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
                   ),
                   SizedBox(
                     width: blockWidth * 3,
