@@ -113,7 +113,7 @@ class AuthServiceImpl extends AuthService {
         );
 
         // Future.delayed(Duration(seconds: 15));
-        Get.toNamed("/canteenSelect");
+        Get.toNamed("/login");
       } else {
         print('login error');
         Get.snackbar(

@@ -15,22 +15,52 @@ class _CanteenCreditState extends State<CanteenCredit> {
         // automaticallyImplyLeading: false,
         backgroundColor: Colors.red[400],
       ),
-      body: ListView(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _listView(),
-          _listView(),
-          _listView(),
-          _listView(),
-          _listView(),
-          _listView(),
-          _listView(),
-          _listView(),
+          Card(
+            elevation: 20,
+            margin: EdgeInsets.all(
+              20,
+            ),
+            child: Container(
+              // width: 400,
+              height: 200,
+              // color: Colors.orange,
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Container(
+                    height: 80,
+                    // color: Colors.yellow,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Remaining Credits",
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 80,
+                    // color: Colors.yellow,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "RS . 1000.00",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
   }
-
-
 
   Widget _listView() {
     SizeConfig().init(context);
@@ -76,7 +106,8 @@ class _CanteenCreditState extends State<CanteenCredit> {
                           ],
                         ),
                       ),
-                      Text("to",
+                      Text(
+                        "to",
                         style: TextStyle(
                           color: Colors.black87,
                           fontSize: 14.0,
@@ -117,12 +148,18 @@ class _CanteenCreditState extends State<CanteenCredit> {
                     children: <Widget>[
                       Text(
                         'UCSC canteen',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400,color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black87),
                       ),
                       SizedBox(height: 10.0),
                       Text(
                         '2020-10-13',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300,color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black87),
                       ),
                     ],
                   )

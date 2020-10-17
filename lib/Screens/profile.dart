@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:awanahala/Screens/ratethefood.dart';
 import 'package:awanahala/shared/sizeConfig.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserProfile extends StatefulWidget {
@@ -12,6 +13,19 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   File _image;
+
+  String email = "";
+  String uid = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      email = Hive.box('user').get('email');
+      uid = Hive.box('user').get('id');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +37,15 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget _body() {
-    return ListView(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         _profilepic(),
         _divider(),
         _profiledetails(),
-        _heading1("Ongoing oder"),
+        // _heading1("Ongoing oder"),
         //_myongoingoders(),
-        _heading2("Last Order"),
+        // _heading2("Last Order"),
         //_mypastoders(),
       ],
     );
@@ -62,9 +77,7 @@ class _UserProfileState extends State<UserProfile> {
                       borderRadius: BorderRadius.circular(50)),
                   width: 100,
                   height: 100,
-                  child: Image.asset(
-                     "images/awatar.png"
-                  ),
+                  child: Image.asset("images/awatar.png"),
                 ),
         ),
       ),
@@ -86,19 +99,19 @@ class _UserProfileState extends State<UserProfile> {
       padding: EdgeInsets.only(top: 16),
       child: Column(
         children: <Widget>[
+          // Text(
+          //   "Theekshana sashika",
+          //   style: TextStyle(fontSize: 20),
+          // ),
+          SizedBox(height: 10),
           Text(
-            "Theekshana sashika",
-            style: TextStyle(fontSize: 20),
+            email,
+            style: TextStyle(fontSize: 30, color: Color(0xffaeaeae)),
           ),
           SizedBox(height: 10),
           Text(
-            "Theekshanasashika@gmail.com",
-            style: TextStyle(fontSize: 16, color: Color(0xffaeaeae)),
-          ),
-          SizedBox(height: 10),
-          Text(
-            "+9471 3423 7869",
-            style: TextStyle(fontSize: 16, color: Color(0xffaeaeae)),
+            uid,
+            style: TextStyle(fontSize: 20, color: Color(0xffaeaeae)),
           ),
           SizedBox(height: 20),
           // Expanded(child: _myoders())
@@ -106,6 +119,7 @@ class _UserProfileState extends State<UserProfile> {
       ),
     );
   }
+
   Widget _heading1(String text) {
     SizeConfig().init(context);
     double blockHeight = SizeConfig.safeBlockVertical;
@@ -117,7 +131,7 @@ class _UserProfileState extends State<UserProfile> {
           Row(
             children: [
               Container(
-                width: blockWidth*50,
+                width: blockWidth * 50,
                 child: Padding(
                   padding: EdgeInsets.only(left: 16),
                   child: Text(
@@ -137,7 +151,7 @@ class _UserProfileState extends State<UserProfile> {
               //     size: blockWidth*15,
               //   ),
               //   onPressed: () {
-                  
+
               //   },
               // )
             ],
@@ -146,7 +160,6 @@ class _UserProfileState extends State<UserProfile> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: ClipRRect(
-                
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   height: 4,
@@ -156,9 +169,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
             ),
           ),
-          SizedBox(
-            height: blockHeight*3
-          ),
+          SizedBox(height: blockHeight * 3),
         ],
       ),
     );
@@ -190,7 +201,6 @@ class _UserProfileState extends State<UserProfile> {
               IconButton(
                 alignment: Alignment.centerRight,
                 icon: Icon(
-
                   Icons.access_alarm,
                   color: Colors.green,
                   size: blockWidth * 15,
@@ -217,9 +227,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
             ),
           ),
-          SizedBox(
-            height: blockHeight*3
-          ),
+          SizedBox(height: blockHeight * 3),
         ],
       ),
     );
